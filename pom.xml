@@ -33,6 +33,7 @@
 
     <!--配置dependencyManagement锁定依赖的版本-->
     <dependencyManagement>
+
         <dependencies>
             <!--mybatis-plus 持久层-->
             <dependency>
@@ -75,6 +76,14 @@
                 <artifactId>junit-vintage-engine</artifactId>
                 <scope>test</scope>
             </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.12</version>
+                <scope>provided</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
