@@ -20,4 +20,16 @@ public interface SysMenuService extends IService<SysMenu> {
 
     //IPage<SysMenu> selectPage(Page<SysMenu> pageParam, AssginMenuVo assginMenuVo);
     //IPage<SysRole> selectPage(Page<SysRole> pageParam, SysRoleQueryVo sysRoleQueryVo);
+
+    /**
+     * 根据角色获取授权权限数据
+     * @return
+     */
+    List<SysMenu> findSysMenuByRoleId(Long roleId);
+
+    /**
+     * 保存角色权限
+     * @param  assginMenuVo
+     */
+    void doAssign(AssginMenuVo assginMenuVo);
 }
