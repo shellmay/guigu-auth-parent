@@ -1,10 +1,12 @@
 package com.atguigu.system.service.impl;
 
 import com.atguigu.common.helper.MenuHelper;
+import com.atguigu.common.helper.RouterHelper;
 import com.atguigu.common.result.ResultCodeEnum;
 import com.atguigu.model.system.SysMenu;
 import com.atguigu.model.system.SysRoleMenu;
 import com.atguigu.model.vo.AssginMenuVo;
+import com.atguigu.model.vo.RouterVo;
 import com.atguigu.system.execption.GuiguException;
 import com.atguigu.system.mapper.SysMenuMapper;
 import com.atguigu.system.mapper.SysRoleMenuMapper;
@@ -27,6 +29,25 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper,SysMenu> imple
     @Autowired
     private SysMenuMapper sysMenuMapper;
 
+
+    @Override
+    public List<String> findUserPermsList(Long userId) {
+        //超级管理员admin账号id为：1
+        List<SysMenu> sysMenuList = null;
+        if (userId.longValue() == 1) {
+            sysMenuList = sysMenuMapper.selectList(new QueryWrapper<SysMenu>().eq("status", 1));
+        } else {
+            sysMenuList = sysMenuMapper.findListByUserId(userId);
+        }
+        //创建返回的集合
+        List<String> permissionList = new ArrayList<>();
+        for (SysMenu sysMenu : sysMenuList) {
+            if(sysMenu.getType() == 2){
+                permissionList.add(sysMenu.getPerms());
+            }
+        }
+        return permissionList;
+    }
 
     @Override
     public List<SysMenu> findNodes() {
@@ -94,6 +115,23 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper,SysMenu> imple
                 sysRoleMenuMapper.insert(sysRoleMenu);
             }
         }
+    }
+
+    @Override
+    public List<RouterVo> findUserMenuList(Long userId) {
+        //超级管理员admin账号id为：1
+        List<SysMenu> sysMenuList = null;
+        if (userId.longValue() == 1) {
+            sysMenuList = sysMenuMapper.selectList(new QueryWrapper<SysMenu>().eq("status", 1).orderByAsc("sort_value"));
+        } else {
+            sysMenuList = sysMenuMapper.findListByUserId(userId);
+        }
+        //构建树形数据
+        List<SysMenu> sysMenuTreeList = MenuHelper.buildTree(sysMenuList);
+
+        //构建路由
+        List<RouterVo> routerVoList = RouterHelper.buildRouters(sysMenuTreeList);
+        return routerVoList;
     }
 
 }

@@ -3,6 +3,7 @@ package com.atguigu.system.service;
 import com.atguigu.model.system.SysMenu;
 import com.atguigu.model.system.SysRole;
 import com.atguigu.model.vo.AssginMenuVo;
+import com.atguigu.model.vo.RouterVo;
 import com.atguigu.model.vo.SysRoleQueryVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -11,6 +12,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 
 public interface SysMenuService extends IService<SysMenu> {
+
+    /**
+     * 获取用户按钮权限
+     * @param userId
+     * @return
+     */
+    List<String> findUserPermsList(Long userId);
 
     /**
      * 菜单树形数据
@@ -32,4 +40,12 @@ public interface SysMenuService extends IService<SysMenu> {
      * @param  assginMenuVo
      */
     void doAssign(AssginMenuVo assginMenuVo);
+
+
+    /**
+     * 获取用户菜单
+     * @param userId
+     * @return
+     */
+    List<RouterVo> findUserMenuList(Long userId);
 }
