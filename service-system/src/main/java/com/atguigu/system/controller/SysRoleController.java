@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class SysRoleController {
     private SysRoleService sysRoleService;
 
     //新增角色
+    @PreAuthorize("hasAuthority('bnt.sysRole.add')")
     @ApiOperation(value = "新增角色")
     @PostMapping("save")
     public Result save(@RequestBody SysRole role) {
@@ -32,6 +34,7 @@ public class SysRoleController {
     }
 
 
+    @PreAuthorize("hasAuthority('bnt.sysRole.list')")
     //条件分页查询
     @ApiOperation("条件分页查询")
     @GetMapping("{page}/{limit}")
@@ -65,6 +68,7 @@ public class SysRoleController {
     }
 
 
+    @PreAuthorize("hasAuthority('bnt.sysRole.remove')")
     @ApiOperation("逻辑删除接口")
     @DeleteMapping("remove/{id}")
     public Result removeRole(@PathVariable Long id) {
@@ -78,6 +82,7 @@ public class SysRoleController {
     }
 
     //修改-根据id查询
+    @PreAuthorize("hasAuthority('bnt.sysRole.list')")
     @ApiOperation("根据id查询")
     @PostMapping("findRoleById/{id}")
     public Result findRoleById(@PathVariable Long id){
@@ -85,6 +90,7 @@ public class SysRoleController {
         return Result.ok(sysRole);
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysRole.update')")
     @ApiOperation("最终修改")
     @PostMapping("update")
     public Result updateRole(@RequestBody SysRole sysRole){
@@ -96,6 +102,7 @@ public class SysRoleController {
         }
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysRole.remove')")
     @ApiOperation(value = "根据id列表删除")
     @DeleteMapping("/batchRemove")
     public Result batchRemove(@RequestBody List<Long> idList) {
