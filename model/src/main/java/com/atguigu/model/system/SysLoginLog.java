@@ -1,7 +1,9 @@
 package com.atguigu.model.system;
 
 import com.atguigu.model.base.BaseEntity;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,6 +16,9 @@ import java.util.Date;
 public class SysLoginLog extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
+
+	//@TableId(type = IdType.AUTO)
+	//private int id;
 
 	@ApiModelProperty(value = "用户账号")
 	@TableField("username")

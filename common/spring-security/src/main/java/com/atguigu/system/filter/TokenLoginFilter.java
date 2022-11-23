@@ -12,6 +12,9 @@ import com.atguigu.common.utils.ResponseUtil;
 import com.atguigu.model.vo.LoginVo;
 import com.atguigu.system.custom.CustomUser;
 
+
+import com.atguigu.system.service.SysLoginLogService;
+import com.atguigu.system.utils.IpUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,12 +42,18 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private RedisTemplate redisTemplate;
 
-    public TokenLoginFilter(AuthenticationManager authenticationManager,RedisTemplate redisTemplate) {
+    private SysLoginLogService loginLogService;
+
+
+
+    public TokenLoginFilter(AuthenticationManager authenticationManager,
+                            RedisTemplate redisTemplate,SysLoginLogService loginLogService) {
         this.setAuthenticationManager(authenticationManager);
         this.setPostOnly(false);
         //指定登录接口及提交方式，可以指定任意路径
         this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/admin/system/index/login","POST"));
         this.redisTemplate=redisTemplate;
+        this.loginLogService=loginLogService;
     }
 
     /**
@@ -95,6 +104,9 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
         redisTemplate.opsForValue().set(customUser.getUsername(),
                 JSON.toJSONString(customUser.getAuthorities()));
 
+        //记录登录日志
+        loginLogService.recordLoginLog(customUser.getUsername(),1, IpUtil.getIpAddress(request),"登录成功");
+
         //返回
         Map<String, Object> map = new HashMap<>();
         map.put("token", token);
@@ -122,4 +134,6 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
             ResponseUtil.out(response, Result.build(null, ResultCodeEnum.LOGIN_MOBLE_ERROR));
         }
     }
+
+
 }
