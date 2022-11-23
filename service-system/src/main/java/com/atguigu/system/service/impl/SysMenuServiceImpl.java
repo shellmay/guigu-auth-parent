@@ -1,7 +1,7 @@
 package com.atguigu.system.service.impl;
 
-import com.atguigu.common.helper.MenuHelper;
-import com.atguigu.common.helper.RouterHelper;
+import com.atguigu.system.utils.MenuHelper;
+import com.atguigu.system.utils.RouterHelper;
 import com.atguigu.common.result.ResultCodeEnum;
 import com.atguigu.model.system.SysMenu;
 import com.atguigu.model.system.SysRoleMenu;

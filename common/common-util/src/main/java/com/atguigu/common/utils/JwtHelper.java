@@ -1,4 +1,4 @@
-package com.atguigu.common.helper;
+package com.atguigu.common.utils;
 
 import io.jsonwebtoken.*;
 import org.springframework.util.StringUtils;

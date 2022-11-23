@@ -1,4 +1,4 @@
-package com.atguigu.common.helper;
+package com.atguigu.system.utils;
 
 
 import com.atguigu.model.system.SysMenu;

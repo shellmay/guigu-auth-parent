@@ -1,6 +1,6 @@
 package com.atguigu.system.controller;
-import com.atguigu.common.helper.MD5;
-import com.atguigu.common.helper.JwtHelper;
+import com.atguigu.common.utils.MD5;
+import com.atguigu.common.utils.JwtHelper;
 import com.atguigu.common.result.Result;
 import com.atguigu.common.result.ResultCodeEnum;
 import com.atguigu.model.system.SysUser;
@@ -9,13 +9,10 @@ import com.atguigu.system.execption.GuiguException;
 import com.atguigu.system.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import jdk.nashorn.internal.objects.annotations.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.support.SimpleTriggerContext;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
